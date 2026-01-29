@@ -1,7 +1,21 @@
+import sys
+import types
+
+fake_grewpy = types.ModuleType("grewpy")
+fake_grewpy.Corpus = object
+fake_grewpy.Request = object
+
+def set_config(*args, **kwargs):
+    pass
+
+fake_grewpy.set_config = set_config
+
+sys.modules["grewpy"] = fake_grewpy
+
 from grewtse.evaluators.evaluator import GrewTSEvaluator
 from datasets import load_dataset
-import pandas as pd
 import os
+import pandas as pd
 
 OVERVIEW_OUTPUT_DIR = "../../evaluation_results"
 OVERVIEW_OUTPUT_FILENAME = "overview"
@@ -69,18 +83,15 @@ dataset_config = {
 
 evaluation_config = {
     "mlm": {
+        "HPLT": "HPLT/hplt_bert_base_ka", 
         "mBERT": "google-bert/bert-base-multilingual-cased", 
         "RemBERT": "google/rembert",
-        "HPLT": "HPLT/hplt_bert_base_ka",
         "XLM-RoBERTa(bs)": "FacebookAI/xlm-roberta-base",
         "XLM-RoBERTa(lg)": "FacebookAI/xlm-roberta-large",
     },
     "ntp": {
-        "mGPT": "ai-forever/mGPT-1.3B-georgian",
-        "mGPT-13B": "ai-forever/mGPT-13B",
         "mGPT-1.3B-Georgian": "ai-forever/mGPT-1.3B-georgian",
         "GPT2-GEO": "Kuduxaaa/gpt2-geo",
-        "Kona2-12B": "tbilisi-ai-lab/kona2-12B"
     }
 }
 
@@ -107,7 +118,7 @@ def main():
                 print(task_dataset.head())
 
                 if task_type == "mlm":
-                    evaluation_types = ["sentence-level", "token-level"]
+                    evaluation_types = ["token-level", "sentence-level"]
                 elif task_type == "ntp":
                     evaluation_types = ["sentence-level"]
                 else:
@@ -161,10 +172,16 @@ def main():
 
                     means_path = f"{OVERVIEW_OUTPUT_DIR}/means/{eval_type}-{task}.csv"
                     if os.path.exists(means_path):
+                        print("Looking for ", means_path)
                         means_df = pd.read_csv(means_path)
-                        means_df = means_df.append([means], ignore_index=True)
+                        print(means_df.head())
+                        means_df = pd.concat([means_df, pd.DataFrame([means])], ignore_index=True)
+                        print("Concatenating...")
+                        print(means_df.head())
+                        print("Appending means path", means_path)
                     else:
                         means_df = pd.DataFrame([means])
+                        print("Starting means, ", means_path)
                     means_df.to_csv(means_path, index=False) 
 
 if __name__ == "__main__":
