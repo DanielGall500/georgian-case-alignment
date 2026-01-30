@@ -22,7 +22,7 @@ from datasets import load_dataset
 import os
 import pandas as pd
 
-OVERVIEW_OUTPUT_DIR = "../../evaluation_results"
+OVERVIEW_OUTPUT_DIR = "./results"
 OVERVIEW_OUTPUT_FILENAME = "overview"
 OVERVIEW_OUTPUT_FULL_PATH = f"{OVERVIEW_OUTPUT_DIR}/{OVERVIEW_OUTPUT_FILENAME}.csv"
 DATASET_REPO = "DanielGallagherIRE/georgian-case-alignment"
@@ -123,7 +123,7 @@ def main():
                 print(task_dataset.head())
 
                 if task_type == "mlm":
-                    evaluation_types = ["token-level", "sentence-level"]
+                    evaluation_types = ["word-level", "sentence-level"]
                 elif task_type == "ntp":
                     evaluation_types = ["sentence-level"]
                 else:

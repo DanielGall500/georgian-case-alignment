@@ -1,6 +1,6 @@
 import pandas as pd
 
-EVAL_RESULTS_PATH = "./results"
+EVAL_RESULTS_PATH = "./results/full"
 RESULTS_REFORMATTED_PATH = f"{EVAL_RESULTS_PATH}/vis/bar-chart-reformatted.csv"
 VIS_OUTPUT_PATH = "./vis/results-bar-chart.png"
 
