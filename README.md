@@ -9,4 +9,4 @@ More details of this work to be released soon...
 ![Georgian Case Alignment](vis/case-alignment.png)
 
 #### Acknowledgements
-Part of this work was conducted within the \href{https://coral-nlp.github.io}{CORAL project} funded by the German Federal Ministry of Research, Technology, and Space (BMFTR) under the grant number 16IS24077A. Responsibility for the content of this publication lies with the authors.
+Part of this work was conducted within the [CORAL project](https://coral-nlp.github.io) funded by the German Federal Ministry of Research, Technology, and Space (BMFTR) under the grant number 16IS24077A. Responsibility for the content of this publication lies with the authors.
