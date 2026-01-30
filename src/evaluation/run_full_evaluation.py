@@ -1,3 +1,7 @@
+"""
+Uncomment the below code if you have issues with grewpy or grewpy_backend.
+For the evaluation you do not need grewpy and so this will allow you to bypass any errors.
+
 import sys
 import types
 
@@ -11,6 +15,7 @@ def set_config(*args, **kwargs):
 fake_grewpy.set_config = set_config
 
 sys.modules["grewpy"] = fake_grewpy
+"""
 
 from grewtse.evaluators.evaluator import GrewTSEvaluator
 from datasets import load_dataset
