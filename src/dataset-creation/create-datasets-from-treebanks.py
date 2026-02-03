@@ -22,7 +22,10 @@ TREEBANKS_KARTULI = [
 OUTPUT_DIR = "./output"
 LEXICON_FILE = "./output/georgian-lexicon.csv"
 
-def create_config(query: str, dep_node: str, convert_case_to: str, task_prefix: str) -> dict:
+
+def create_config(
+    query: str, dep_node: str, convert_case_to: str, task_prefix: str
+) -> dict:
     task_name = f"{task_prefix}-{dep_node}-to-{convert_case_to}"
     results_dir = f"{OUTPUT_DIR}/{task_prefix}"
 
@@ -38,8 +41,9 @@ def create_config(query: str, dep_node: str, convert_case_to: str, task_prefix: 
         "output_dataset": f"{results_dir}/{task_name}.csv",
         "alternative_morph_features": {"case": convert_case_to},
         "save_lexicon_to": f"{OUTPUT_DIR}/{LEXICON_FILE}",
-        "task_name": task_name
+        "task_name": task_name,
     }
+
 
 def run_config(config: dict):
     grewtse = GrewTSEPipe()
@@ -91,18 +95,18 @@ def main():
         """
 
     config_in_to_erg = create_config(
-            query=intransitive_query,
-            dep_node="SUBJ",
-            convert_case_to="Dat",
-            task_prefix=task_prefix
-        )
+        query=intransitive_query,
+        dep_node="SUBJ",
+        convert_case_to="Dat",
+        task_prefix=task_prefix,
+    )
 
     config_in_to_dat = create_config(
-            query=intransitive_query,
-            dep_node="SUBJ",
-            convert_case_to="Erg",
-            task_prefix="ka-intransitive-to-ERG",
-        )
+        query=intransitive_query,
+        dep_node="SUBJ",
+        convert_case_to="Erg",
+        task_prefix="ka-intransitive-to-ERG",
+    )
 
     # == TRANSITIVE (S1) ==
 
@@ -120,35 +124,35 @@ def main():
 
     # -- S1 (Nom-Dat), Convert SUBJ->Ergative --
     config_trns_s1_subj_to_erg = create_config(
-            query=trns_s1_query,
-            dep_node="SUBJ",
-            convert_case_to="Erg",
-            task_prefix=task_prefix_s1
-        )
+        query=trns_s1_query,
+        dep_node="SUBJ",
+        convert_case_to="Erg",
+        task_prefix=task_prefix_s1,
+    )
 
     # -- S1 (Nom-Dat), Convert SUBJ->Dative --
     config_trns_s1_subj_to_dat = create_config(
-            query=trns_s1_query,
-            dep_node="SUBJ",
-            convert_case_to="Dat",
-            task_prefix=task_prefix_s1
-        )
+        query=trns_s1_query,
+        dep_node="SUBJ",
+        convert_case_to="Dat",
+        task_prefix=task_prefix_s1,
+    )
 
     # -- S1 (Nom-Dat), Convert OBJ->Nominative --
     config_trns_s1_obj_to_nom = create_config(
-            query=trns_s1_query,
-            dep_node="OBJ",
-            convert_case_to="Nom",
-            task_prefix=task_prefix_s1
-        )
+        query=trns_s1_query,
+        dep_node="OBJ",
+        convert_case_to="Nom",
+        task_prefix=task_prefix_s1,
+    )
 
     # -- S1 (Nom-Dat), Convert OBJ->Ergative --
     config_trns_s1_obj_to_erg = create_config(
-            query=trns_s1_query,
-            dep_node="OBJ",
-            convert_case_to="Erg",
-            task_prefix=task_prefix_s1
-        )
+        query=trns_s1_query,
+        dep_node="OBJ",
+        convert_case_to="Erg",
+        task_prefix=task_prefix_s1,
+    )
 
     # == TRANSITIVE (S2) ==
 
@@ -166,35 +170,35 @@ def main():
 
     # -- S2 (Erg-Nom), Convert SUBJ->Nominative --
     config_trns_s2_subj_to_nom = create_config(
-            query=trns_s2_query,
-            dep_node="SUBJ",
-            convert_case_to="Nom",
-            task_prefix=task_prefix_s2
-        )
+        query=trns_s2_query,
+        dep_node="SUBJ",
+        convert_case_to="Nom",
+        task_prefix=task_prefix_s2,
+    )
 
     # -- S2 (Erg-Nom), Convert SUBJ->Dative --
     config_trns_s2_subj_to_dat = create_config(
-            query=trns_s2_query,
-            dep_node="SUBJ",
-            convert_case_to="Dat",
-            task_prefix=task_prefix_s2
-        )
+        query=trns_s2_query,
+        dep_node="SUBJ",
+        convert_case_to="Dat",
+        task_prefix=task_prefix_s2,
+    )
 
     # -- S2 (Erg-Nom), Convert OBJ->Ergative --
     config_trns_s2_obj_to_erg = create_config(
-            query=trns_s2_query,
-            dep_node="OBJ",
-            convert_case_to="Erg",
-            task_prefix=task_prefix_s2
-        )
+        query=trns_s2_query,
+        dep_node="OBJ",
+        convert_case_to="Erg",
+        task_prefix=task_prefix_s2,
+    )
 
     # -- S2 (Erg-Nom), Convert OBJ->Dative --
     config_trns_s2_obj_to_dat = create_config(
-            query=trns_s2_query,
-            dep_node="OBJ",
-            convert_case_to="Dat",
-            task_prefix=task_prefix_s2
-        )
+        query=trns_s2_query,
+        dep_node="OBJ",
+        convert_case_to="Dat",
+        task_prefix=task_prefix_s2,
+    )
 
     # == TRANSITIVE (S3) ==
 
@@ -212,35 +216,35 @@ def main():
 
     # -- S3 (Dat-Nom), Convert SUBJ->Nominative --
     config_trns_s3_subj_to_nom = create_config(
-            query=trns_s3_query,
-            dep_node="SUBJ",
-            convert_case_to="Nom",
-            task_prefix=task_prefix_s3
-        )
+        query=trns_s3_query,
+        dep_node="SUBJ",
+        convert_case_to="Nom",
+        task_prefix=task_prefix_s3,
+    )
 
     # -- S3 (Dat-Nom), Convert SUBJ->Ergative --
     config_trns_s3_subj_to_erg = create_config(
-            query=trns_s3_query,
-            dep_node="SUBJ",
-            convert_case_to="Erg",
-            task_prefix=task_prefix_s3
-        )
+        query=trns_s3_query,
+        dep_node="SUBJ",
+        convert_case_to="Erg",
+        task_prefix=task_prefix_s3,
+    )
 
     # -- S3 (Dat-Nom), Convert OBJ->Dative --
     config_trns_s3_obj_to_dat = create_config(
-            query=trns_s3_query,
-            dep_node="OBJ",
-            convert_case_to="Dat",
-            task_prefix=task_prefix_s3
-        )
+        query=trns_s3_query,
+        dep_node="OBJ",
+        convert_case_to="Dat",
+        task_prefix=task_prefix_s3,
+    )
 
     # -- S3 (Dat-Nom), Convert OBJ->Ergative --
     config_trns_s3_obj_to_erg = create_config(
-            query=trns_s3_query,
-            dep_node="OBJ",
-            convert_case_to="Erg",
-            task_prefix=task_prefix_s3
-        )
+        query=trns_s3_query,
+        dep_node="OBJ",
+        convert_case_to="Erg",
+        task_prefix=task_prefix_s3,
+    )
 
     all_intransitive_configs_nom = [
         config_in_to_erg,
@@ -248,40 +252,38 @@ def main():
     ]
 
     all_transitive_configs_nom_dat = [
-            config_trns_s1_subj_to_erg,
-            config_trns_s1_subj_to_dat,
-            config_trns_s1_obj_to_nom,
-            config_trns_s1_obj_to_erg
+        config_trns_s1_subj_to_erg,
+        config_trns_s1_subj_to_dat,
+        config_trns_s1_obj_to_nom,
+        config_trns_s1_obj_to_erg,
     ]
 
     all_transitive_configs_erg_nom = [
-            config_trns_s2_subj_to_nom,
-            config_trns_s2_subj_to_dat,
-            config_trns_s2_obj_to_erg,
-            config_trns_s2_obj_to_dat
+        config_trns_s2_subj_to_nom,
+        config_trns_s2_subj_to_dat,
+        config_trns_s2_obj_to_erg,
+        config_trns_s2_obj_to_dat,
     ]
 
     all_transitive_configs_dat_nom = [
-            config_trns_s3_subj_to_nom,
-            config_trns_s3_subj_to_erg,
-            config_trns_s3_obj_to_dat,
-            config_trns_s3_obj_to_erg,
+        config_trns_s3_subj_to_nom,
+        config_trns_s3_subj_to_erg,
+        config_trns_s3_obj_to_dat,
+        config_trns_s3_obj_to_erg,
     ]
 
-    all_verbal_paradigm_configs = [all_intransitive_configs_nom,
-                   all_transitive_configs_nom_dat,
-                   all_transitive_configs_erg_nom,
-                   all_transitive_configs_dat_nom]
+    all_verbal_paradigm_configs = [
+        all_intransitive_configs_nom,
+        all_transitive_configs_nom_dat,
+        all_transitive_configs_erg_nom,
+        all_transitive_configs_dat_nom,
+    ]
 
-    results = {
-        "task_name": [],
-        "structures_masked": [],
-        "minimal_pairs_found": []
-    }
+    results = {"task_name": [], "structures_masked": [], "minimal_pairs_found": []}
 
-    # run this for each of the configs to carry out the 
+    # run this for each of the configs to carry out the
     # process of generating minimal-pair sentences
-    # here the example for 
+    # here the example for
     for verbal_paradigm_configs in all_verbal_paradigm_configs:
         for config in verbal_paradigm_configs:
             print("Parsing...")
@@ -295,7 +297,8 @@ def main():
             print("----")
 
         results = pd.DataFrame(results)
-        results.to_csv(f"{OUTPUT_DIR}/meta.csv", mode='a')
+        results.to_csv(f"{OUTPUT_DIR}/meta.csv", mode="a")
+
 
 if __name__ == "__main__":
     main()

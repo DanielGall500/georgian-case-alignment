@@ -21,24 +21,18 @@ task_order = [
     "transitive-dat-nom-obj",
 ]
 
-df["task"] = pd.Categorical(
-        df["task"],
-        categories=task_order,
-        ordered=True
-)
+df["task"] = pd.Categorical(df["task"], categories=task_order, ordered=True)
 print(df["accuracy"])
 df["accuracy"] = df["accuracy"].apply(lambda x: float(x) * 100)
 df["accuracy"] = df["accuracy"].astype(int)
 
 token_df = df[df["evaluation_type"] == "token-level"]
-sent_df  = df[df["evaluation_type"] == "sentence-level"]
+sent_df = df[df["evaluation_type"] == "sentence-level"]
+
 
 def make_pivot(df):
-    return df.pivot(
-        index="model",
-        columns="task",
-        values="accuracy"
-    )
+    return df.pivot(index="model", columns="task", values="accuracy")
+
 
 print(token_df)
 print("====")
@@ -54,16 +48,18 @@ print("Sentence-level Acc Avg: ", sent_df["accuracy"].mean())
 print("Difference: ", sent_df["accuracy"].mean() - token_df["accuracy"].mean())
 
 token_table = make_pivot(token_df)
-sent_table  = make_pivot(sent_df)
+sent_table = make_pivot(sent_df)
+
 
 def accuracy_to_cell(val):
     if pd.isna(val):
         return ""
-    intensity = int(val) -10 
+    intensity = int(val) - 10
     return rf"\cellcolor{{softgreen!{intensity}}} {val}"
 
+
 token_latex_df = token_table.applymap(accuracy_to_cell)
-sent_latex_df  = sent_table.applymap(accuracy_to_cell)
+sent_latex_df = sent_table.applymap(accuracy_to_cell)
 
 """
 combined = pd.concat([token_latex_df, sent_latex_df])
@@ -80,7 +76,7 @@ token_latex = token_latex_df.to_latex(
     multicolumn_format="c",
     caption="Token-level accuracy by model and task",
     label="tab:token_level",
-    header=False
+    header=False,
 )
 
 sent_latex = sent_latex_df.to_latex(
@@ -89,10 +85,9 @@ sent_latex = sent_latex_df.to_latex(
     multicolumn_format="c",
     caption="Sentence-level accuracy by model and task",
     label="tab:sentence_level",
-    header=False
+    header=False,
 )
 
 print(token_latex)
 print("\n\n")
 print(sent_latex)
-

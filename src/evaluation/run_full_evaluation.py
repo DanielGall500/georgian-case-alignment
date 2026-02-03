@@ -31,65 +31,44 @@ dataset_config = {
     "INTR-S1-NOM": {
         "task": "intransitive-nom-subj",
         "grammatical_col": "form_grammatical_nom",
-        "ungrammatical_cols": [
-            "form_ungrammatical_dat",
-            "form_ungrammatical_erg"
-        ]
+        "ungrammatical_cols": ["form_ungrammatical_dat", "form_ungrammatical_erg"],
     },
     "S1-NOM": {
         "task": "transitive-nom-dat-subj",
         "grammatical_col": "form_grammatical_nom",
-        "ungrammatical_cols": [
-            "form_ungrammatical_dat",
-            "form_ungrammatical_erg"
-        ]
+        "ungrammatical_cols": ["form_ungrammatical_dat", "form_ungrammatical_erg"],
     },
     "S1-DAT": {
         "task": "transitive-nom-dat-obj",
         "grammatical_col": "form_grammatical_dat",
-        "ungrammatical_cols": [
-            "form_ungrammatical_nom",
-            "form_ungrammatical_erg"
-        ]
+        "ungrammatical_cols": ["form_ungrammatical_nom", "form_ungrammatical_erg"],
     },
     "S2-ERG": {
         "task": "transitive-erg-nom-subj",
         "grammatical_col": "form_grammatical_erg",
-        "ungrammatical_cols": [
-            "form_ungrammatical_nom",
-            "form_ungrammatical_dat"
-        ]
+        "ungrammatical_cols": ["form_ungrammatical_nom", "form_ungrammatical_dat"],
     },
     "S2-NOM": {
         "task": "transitive-erg-nom-obj",
         "grammatical_col": "form_grammatical_nom",
-        "ungrammatical_cols": [
-            "form_ungrammatical_erg",
-            "form_ungrammatical_dat"
-        ]
+        "ungrammatical_cols": ["form_ungrammatical_erg", "form_ungrammatical_dat"],
     },
     "S3-DAT": {
         "task": "transitive-dat-nom-subj",
         "grammatical_col": "form_grammatical_dat",
-        "ungrammatical_cols": [
-            "form_ungrammatical_nom",
-            "form_ungrammatical_erg"
-        ]
+        "ungrammatical_cols": ["form_ungrammatical_nom", "form_ungrammatical_erg"],
     },
     "S3-NOM": {
         "task": "transitive-dat-nom-obj",
         "grammatical_col": "form_grammatical_nom",
-        "ungrammatical_cols": [
-            "form_ungrammatical_dat",
-            "form_ungrammatical_erg"
-        ]
+        "ungrammatical_cols": ["form_ungrammatical_dat", "form_ungrammatical_erg"],
     },
 }
 
 evaluation_config = {
     "mlm": {
-        "HPLT": "HPLT/hplt_bert_base_ka", 
-        "mBERT": "google-bert/bert-base-multilingual-cased", 
+        "HPLT": "HPLT/hplt_bert_base_ka",
+        "mBERT": "google-bert/bert-base-multilingual-cased",
         "RemBERT": "google/rembert",
         "XLM-RoBERTa(bs)": "FacebookAI/xlm-roberta-base",
         "XLM-RoBERTa(lg)": "FacebookAI/xlm-roberta-large",
@@ -97,8 +76,9 @@ evaluation_config = {
     "ntp": {
         "mGPT-1.3B-Georgian": "ai-forever/mGPT-1.3B-georgian",
         "GPT2-GEO": "Kuduxaaa/gpt2-geo",
-    }
+    },
 }
+
 
 def main():
     if not os.path.exists(OVERVIEW_OUTPUT_DIR):
@@ -141,7 +121,10 @@ def main():
                     )
 
                     all_probs_grammatical = evaluation_results[f"p_{grammatical_col}"]
-                    all_probs_ungrammatical = {col:evaluation_results[f"p_{col}"] for col in ungrammatical_cols}
+                    all_probs_ungrammatical = {
+                        col: evaluation_results[f"p_{col}"]
+                        for col in ungrammatical_cols
+                    }
 
                     print("====")
                     print(task_type)
@@ -152,7 +135,8 @@ def main():
                     print("Avg Prob Grammatical: ", all_probs_grammatical.mean())
 
                     accuracy = geval.get_accuracy(
-                        f"p_{grammatical_col}", [f"p_{ug_col}" for ug_col in ungrammatical_cols]
+                        f"p_{grammatical_col}",
+                        [f"p_{ug_col}" for ug_col in ungrammatical_cols],
                     )
                     print(accuracy)
                     print("=====")
@@ -160,18 +144,31 @@ def main():
                     if os.path.exists(OVERVIEW_OUTPUT_FULL_PATH):
                         results_df = pd.read_csv(OVERVIEW_OUTPUT_FULL_PATH)
                         results_df.loc[len(results_df)] = [
-                                model_repo, task, eval_type, task_type, accuracy
+                            model_repo,
+                            task,
+                            eval_type,
+                            task_type,
+                            accuracy,
                         ]
                     else:
-                        results_df = pd.DataFrame([
-                            [model_repo,task,eval_type,task_type,accuracy]
-                        ], columns=["model", "task", "evaluation_type", "task_type", "accuracy"])
+                        results_df = pd.DataFrame(
+                            [[model_repo, task, eval_type, task_type, accuracy]],
+                            columns=[
+                                "model",
+                                "task",
+                                "evaluation_type",
+                                "task_type",
+                                "accuracy",
+                            ],
+                        )
                     results_df.to_csv(OVERVIEW_OUTPUT_FULL_PATH, index=False)
 
                     means = {}
                     means[grammatical_col] = all_probs_grammatical.mean()
                     for ungrammatical_col in all_probs_ungrammatical.keys():
-                        means[ungrammatical_col] = all_probs_ungrammatical[ungrammatical_col].mean()
+                        means[ungrammatical_col] = all_probs_ungrammatical[
+                            ungrammatical_col
+                        ].mean()
                     means["model"] = model
                     means["repo"] = model_repo
 
@@ -180,15 +177,17 @@ def main():
                         print("Looking for ", means_path)
                         means_df = pd.read_csv(means_path)
                         print(means_df.head())
-                        means_df = pd.concat([means_df, pd.DataFrame([means])], ignore_index=True)
+                        means_df = pd.concat(
+                            [means_df, pd.DataFrame([means])], ignore_index=True
+                        )
                         print("Concatenating...")
                         print(means_df.head())
                         print("Appending means path", means_path)
                     else:
                         means_df = pd.DataFrame([means])
                         print("Starting means, ", means_path)
-                    means_df.to_csv(means_path, index=False) 
+                    means_df.to_csv(means_path, index=False)
+
 
 if __name__ == "__main__":
     main()
-
